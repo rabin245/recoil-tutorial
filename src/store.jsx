@@ -41,10 +41,43 @@ const filteredTodoList = selector({
   },
 });
 
+const posts = atom({
+  key: "Posts",
+  default: [],
+  effects: [
+    ({ setSelf, trigger }) => {
+      if (trigger === "get") {
+        fetch("https://jsonplaceholder.typicode.com/posts")
+          .then((res) => res.json())
+          .then((data) => setSelf(data.splice(0, 3)));
+      }
+    },
+    ({ onSet }) => {
+      onSet((newPosts) => {
+        console.log("setting new value", newPosts);
+      });
+    },
+  ],
+});
+
+// const posts = atom({
+//   key: "Posts",
+//   default: selector({
+//     key: "Posts/Default",
+//     get: async () => {
+//       const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+//       const data = await res.json();
+
+//       return data.splice(0, 3);
+//     },
+//   }),
+// });
+
 export {
   counterState,
   isCounterEven,
   todoListState,
   filterState,
   filteredTodoList,
+  posts,
 };

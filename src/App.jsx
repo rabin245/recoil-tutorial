@@ -3,6 +3,7 @@ import "./App.css";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { counterState, isCounterEven } from "./store";
 import Todo from "./Todo";
+import { Link } from "react-router-dom";
 
 function App() {
   const [count, setCount] = useRecoilState(counterState);
@@ -23,6 +24,8 @@ function App() {
       <div>
         <Todo />
       </div>
+
+      <Link to="/posts">posts</Link>
     </div>
   );
 }
